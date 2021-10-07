@@ -5,6 +5,7 @@ require("dotenv").config();
 //connect voi DB
 const mongoose = require("mongoose");
 app.use(express.json());
+
 const connectDB = async () => {
   try {
     await mongoose.connect(
