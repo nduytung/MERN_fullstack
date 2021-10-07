@@ -22,3 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTVkO
     "status" : "learnt"
 }
 
+###
+
+DELETE http://localhost:3000/api/posts/615dac22eaba603ce7b11ab8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTVkOWRlZmYxZGZlYTEwNzA1Nzg3YTkiLCJpYXQiOjE2MzM1NjMyODJ9.5jiYVk0BjDgaCQf1naHzG3QQSXAB1DKo7XyIKGHB7Lo
