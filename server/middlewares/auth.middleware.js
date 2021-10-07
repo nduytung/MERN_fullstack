@@ -17,6 +17,8 @@ const verifyToken = (req, res, next) => {
   try {
     //verify xem token co phai hang xin khong
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log("decoded: ");
+    console.log(decoded);
     //gan userId vao cho req de den stage viet post hay gi do
     req.userId = decoded.userId;
     next();

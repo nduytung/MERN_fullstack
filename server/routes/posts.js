@@ -28,7 +28,7 @@ router.get("/", verifyToken, async (req, res) => {
 router.post("/", verifyToken, async (req, res) => {
   const { title, description, url, status } = req.body;
   if (!title)
-    return req
+    return res
       .status(400)
       .json({ success: false, message: "Title is required" });
 
@@ -55,11 +55,11 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 //sua posts
-router.put("/:id", verifyToken, (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   const { title, description, status, url } = req.body;
-
+  console.log(req.body);
   if (!title)
-    return req
+    return res
       .status(400)
       .json({ success: false, message: "Title is required" });
 
@@ -72,7 +72,7 @@ router.put("/:id", verifyToken, (req, res) => {
     };
 
     //tim post trong DB
-    const postCondition = { _id: erq.params.id, user: userId };
+    const postCondition = { _id: req.params.id, user: req.userId };
     updatedPost = await Post.findOneAndUpdate(postCondition, updatedPost, {
       new: true,
     });
@@ -87,7 +87,28 @@ router.put("/:id", verifyToken, (req, res) => {
       .json({ succe: true, message: "Excellent work", post: updatedPost });
   } catch (err) {
     console.log("err " + err);
-    return req
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+});
+
+router.delete("/:id", verifyToken, async (req, res) => {
+  try {
+    const deleteCondition = { _id: req.params.id, user: req.userId };
+    const deletePost = await Post.findOneAndDelete({ deleteCondition });
+
+    //neu khong xoa duoc
+    if (!deletePost)
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+
+    //xoa thanh cong
+    return res
+      .status(200)
+      .json({ success: true, message: "Deleted successfully" });
+  } catch (err) {
+    console.log("err " + err);
+    return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
   }
